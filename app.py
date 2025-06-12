@@ -113,7 +113,7 @@ TEMPLATE = """
 # List of target suburbs
 bayside_suburbs = [
     "brighton", "hampton", "sandringham", "black rock", "beaumaris", "cheltenham",
-    "mentone", "aspendale", "chelsea", "edithvale", "bonbeach", "seaford", "carrum"
+    "mentone", "aspendale", "chelsea", "edithvale", "bonbeach", "seaford", "carrum","point cook"
 ]
 
 # Real scraping using Playwright
@@ -125,10 +125,10 @@ def extract_properties(suburb):
         browser = p.chromium.launch(headless=True)
         page = browser.new_page()
 
-        for page_num in range(1, 6):
+        for page_num in range(1, 9):
             url = f"https://www.realestate.com.au/buy/in-{suburb_query}+vic/list-{page_num}"
             try:
-                page.goto(url, timeout=60000)
+                page.goto(url, timeout=90000)
                 html = page.content()
                 soup = BeautifulSoup(html, "html.parser")
 
@@ -144,7 +144,7 @@ def extract_properties(suburb):
                         link = "https://www.realestate.com.au" + listing.find("a")["href"]
 
                         # Placeholder last price logic
-                        last_price = "$1,100,000"  # Replace with real sale scraping later
+                        last_price = "$11,100,000"  # Replace with real sale scraping later
 
                         # Add only if lower than fake last price
                         if "$" in price and price.replace("$", "").replace(",", "").isdigit():
